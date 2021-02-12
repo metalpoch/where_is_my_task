@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+   <link rel="stylesheet" href="{% static 'css/pop-up_form.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container mt-2 mb-2">
+  <!-- Form modal -->
+  <div id="taskForm">
+    <div class="container pop-up bg-secondary">
+      <h1 class="">Deliver A New Task!
+	<span id="closeForm" class="btn float-right" aria-hidden="true">
+	  &times;
+	</span>
+      </h1>
+      <hr>
+      <form action="" method="post">
+	{% csrf_token %}
+	{{ form | crispy }}
+	<hr>
+	<div class="row">
+	  <div class="col"><input type="submit" class="btn btn-primary btn-block" value="Send"></div>
+	  <div class="col"><input type="reset" class="btn btn-danger btn-block" value="Clear"></div>
+	</div>
+      </form>
+    </div>
+  </div>
+  <h1>Task Management</h1>
+  <div class="row">
+    <div class="col-12 col-md-7">
+      <!-- CARUSEL -->
+      <div id="carouselControls" class="carousel slide" data-ride="carousel">
+	<div class="container pl-5 pr-5">
+	  <div class="carousel-inner">
+	    {% for employee in employees.values %}
+	    {% if forloop.first %}
+	    <div class="carousel-item active">
+	      <div class="card border-white border-3 mr-5 ml-5 mb-3">
+		<h3 class="card-header bg-primary text-white">{{ employee.fullname | title }}</h3>
+		<div class="card-body text-center bg-light">
+		  <div class="row">
+		    <div class="col">
+		      <img src="{% static 'img/null_avatar.png' %}" alt="{{ employee.fullname }} avatar" class="img-fluid rounded-circle" width="114px" height="97px">
+		    </div>
+		    <div class="col-auto">
+		      <p><strong class="card-title text-white">{{ employee.programming_area }} Developer</strong></p>
+		      <strong class="card-subtitle text-muted">{{ work_area }}</strong>
+		    </div>
+		  </div>
+		</div>
+		<div class="tasks-list">
+		{% for id, task in employee.data_task.items %}
+		<ul class="list-group list-group-flush table-hover">
+		  <li class="list-group-item table-light">{{ task.subject }}
+		    <span class="fixed float-right">
+		      <a class="btn btn-success mr-1" href="{% url 'task_completed' id %}">&#128218;&#10004;</a>
+		      <a class="btn btn-danger" href="#" onclick="taskDelete({{ id }})">&#128196;&#128465;</a>
+		    </span>
+		    <br>
+		    <small class="mute">Limit Date: {{ task.limit_date }}</small>
+		  </li>
+		</ul>
+		{% endfor %}
+		</div>
+		<div class="card-footer text-white text-center bg-primary">
+		   {{ employee.time_working }}
+		</div>
+	      </div>	   
+	      {% else %}
+	      <div class="carousel-item">
+	      <div class="card border-info border-3 mr-5 ml-5 mb-3">
+		<h3 class="card-header bg-primary text-white">{{ employee.fullname | title }}</h3>
+		<div class="card-body text-center bg-light">
+		  <div class="row">
+		    <div class="col">
+		      <img src="{% static 'img/null_avatar.png' %}" alt="{{ employee.fullname }} avatar" class="img-fluid rounded-circle" width="114px" height="97px">
+		    </div>
+		    <div class="col-auto">
+		      <p><strong class="card-title text-white">{{ employee.programming_area }} Developer</strong></p>
+		      <strong class="card-subtitle text-muted">{{ work_area }}</strong>
+		    </div>
+		  </div>
+		</div>
+		<div class="tasks-list">
+		  {% for id, task in employee.data_task.items %}
+		  <ul class="list-group list-group-flush table-light">
+		    <li class="list-group-item table-light">{{ task.subject }}
+		      <span class="fixed float-right">
+			<a class="btn btn-success mr-1" href="{% url 'task_completed' id %}">&#128218;&#10004;</a>
+			<a class="btn btn-danger" href="#" onclick="taskDelete({{ id }})">&#128196;&#128465;</a>
+		      </span>
+		      <br>
+		      <small class="mute">Limit Date: {{ task.limit_date }}</small>
+		    </li>
+		  </ul>
+		  {% endfor %}
+		</div>
+		<div class="card-footer text-white text-center bg-primary">
+		  {{ employee.time_working }}
+		</div>
+	      </div>
+	      {% endif %}
+	      </div>
+	      {% endfor %}
+	    </div>
+	    <div class="row">
+	      <div class="col">
+		    <a class="btn btn-info btn-lg" href="#carouselControls" role="button" data-slide="prev">
+	      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	      <span>Back</span>
+	    </a>      
+	      </div>
+	      <div class="col text-center">
+	      
+		<button id="addTask" class="btn btn-success">New Task</button>
+	      </div>
+	      <div class="col">
+		    <a class="btn btn-info btn-lg float-right" href="#carouselControls" role="button" data-slide="next">
+	      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	      <span>Next</span>
+	    </a>      
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- END CARUSEL -->
+      </div>
+      <!-- list of employees -->
+      <div class="col-12 col-sm-5 mb-5 aside">
+	{% for employee in employees.values %}
+	<div class="toast show bg-light mb-5">
+	  <div class="toast-header bg-primary">
+	    <strong class="mr-auto text-white">{{ employee.fullname | title }}</strong>
+	    <strong class="text-light">{{ work_area }}</strong>
+	  </div>
+	  <div class="toast-body">
+	    <div class="row">
+	      <div class="col-auto">
+		<img src="{% static 'img/null_avatar.png' %}" alt="{{ employee.fullname }} avatar" class="img-fluid rounded-circle" width="114px" height="97px">
+	      </div>
+	      <div class="col-auto">
+		<strong>{{ employee.programming_area }} Developer</strong>
+		<hr class="bg-info">
+		{% if employee.tasks_complete %}
+		<small class="h6">&#10004; Finished Tasks
+		  <strong class="text-success">{{ employee.tasks_complete }}</strong>
+		</small>
+		{% else %}
+		<small class="h6">&#10004; Finished Tasks
+		  <strong class="text-danger">0</strong>
+		</small>
+		{% endif %}
+		<br>
+		{% if employee.tasks_not_complete %}
+		<small class="h6">&#10060; Unfinished Tasks
+		  <strong class="text-danger">{{ employee.tasks_not_complete }}</strong>
+		</small>
+		{% else %}
+		<small class="h6">&#10060; Unfinished Tasks
+		  <strong class="text-success">0</strong>
+		</small>
+		{% endif %}
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	{% endfor %}
+      </div>
+  </div>
+  {% endblock %}
+  {% block js %}
+  <!-- Person Script JS -->
+  <script src={% static 'js/pop-up_form.js' %}></script>
+  <script>
+    // carousel
+    $('.carousel').carousel({
+      interval: false      
+    })
+
+    // sweetalert2
+    function taskDelete(id) {
+      Swal.fire({
+	icon: "question",
+	title: "Are you sure?",
+	text: "This action can not be undone",
+	showCancelButton: true,
+	confirmButtonText: "Yes, delete task",
+	cancelButtonText: "No, keep the task",
+	confirmButtonColor: "#d9534f",
+      })
+      .then((result) => {
+	if(result.isConfirmed) {
+	  window.location.href = "/task_delete/"+id+"/"
+	}
+      })
+    }
+
+    // Form addTask error
+    function taskCreate() {
+      if(error === 'true') {
+	Swal.fire({
+	  icon: 'error',
+	  title: 'Error',
+	  text: 'An error occurred while trying to submit the form.'
+	})
+      }
+    }
+  </script>
+  {% endblock %}
+  

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12 col-md-8 offset-md-2">
+      <div class="card bg-light mb-3 mr-5 ml-5">
+	<div class="card-header">
+	  <h4 class="card-title text-center">
+	    <span class="float-left">&#128204;
+	    </span>Registro de Usuario
+	  </h4>
+	  <form action="" method="post" enctype="multipart/form-data">
+	    {% csrf_token %}
+	    {{ form | crispy }}
+	    <hr>
+	    <a href="{% url 'home' %}">Ir a inicio</a> |
+	    <a href="{% url 'login' %}">Conectate</a>
+	    <div class="float-right">
+	      <a class="btn btn-danger" href="{% url 'login' %}">Cancelar</a>
+	      <input class="btn btn-primary" type="submit" value="Registrar">
+	    </div>
+	  </form>
+	</div>
+      </div>
+    </div>  
+  </div>
+</div>
+{% endblock %}

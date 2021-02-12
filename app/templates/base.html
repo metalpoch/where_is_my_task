@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Where is my task</title>
+  {% load static %}
+  {% block css %}
+  {% endblock %}
+ <!-- bootswatch -->
+   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <!-- Sweetalert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="{% url 'home' %}">&#128221;Where is my task?</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav ml-auto">
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'home' %}">Home</a>
+	</li>
+
+	{% if user.leader %} {# Tiene cargo de lider? #}
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'task_management' %}">Tasks Management</a>
+	</li>
+	{% endif %}
+
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'my_tasks' %}">My Tasks</a>
+	</li>
+
+	<li class="nav-item mr-5">
+	  <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+	</li>
+
+	{% if user.is_authenticated %} {# Esta autentificado? #}
+	<li class="nav-item">
+	  <a class="nav-link text-white" href="{% url 'home' %}">Hi {{ user.first_name }}!</a>
+	</li>	
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+	</li>
+	{% else %}
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'login' %}">Sing In</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'sign_up' %}">Sing Up</a>
+	</li>
+	{% endif %}  
+      
+      </ul>
+    </div>
+  </nav>
+  {% if messages %}
+  {% for message in messages %}
+  <script>
+    Swal.fire({
+      icon: '{{ icon_message }}',
+      title: '{{ title_message }}',
+      text: '{{ message }}'
+    })
+  </script>
+  {% endfor %}
+  {% endif %}
+  {% block content %}
+  {% endblock %}
+  <!-- jQuery and Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  {% block js %}
+  {% endblock %}
+</body>
+</html>

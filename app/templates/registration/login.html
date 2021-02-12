@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+<div class="container-sm mt-5">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="container text-center mt-5 mb-3">
+	<img src="{% static 'img/null_avatar.png' %}" class="img-fluid rounded-circle" width="60%" alt="Imagen de presentación">
+      </div>
+    </div> 
+    <div class="col-md">
+      <div class="container">
+	<div class="card bg-light mb-3 mr-5 ml-5">
+	  <div class="card-header">&#128204
+	    <h4 class="card-title text-center">Iniciar Sesión</h4>
+	    <form action="" method="post">
+	      {% csrf_token %}
+	      {{ form | crispy }}
+	      <hr>
+	      <input class="btn btn-primary btn-block" type="submit" value="Ingresar">
+	    </form>
+	    <div class="text-center">
+	      <a href="{% url 'home' %}">Ir a inicio</a> |
+	      <a href="{% url 'sign_up' %}">Crear usuario</a>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

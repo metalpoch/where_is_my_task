@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css %}
+<style>
+body {
+  background-image: url({% static 'img/background.jpg' %});
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #000;
+}
+
+</style>
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <div id="carouselExampleIndicators" class="carousel slide mt-5" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+	<div class="card mt-5" style="opacity: 0.9">
+	  <div class="card-body">
+	    <h1>A Social Network for Companies!</h1>
+	    <h3>Register and give "Tasks" to your developers.</h3>
+	  </div>
+	</div>
+      </div>
+      <div class="carousel-item">
+	<div class="card mt-5" style="opacity: 0.9">
+	  <div class="card-body">
+	    <h1>Rate Your Developer's Tasks!</h1>
+	    <h3>Reward your team by increasing their score.</h3>
+	  </div>
+	</div>
+      </div>
+      <div class="carousel-item">
+	<div class="card mt-5" style="opacity: 0.9">
+	  <div class="card-body">
+	    <h1>What Are You Waiting For?</h1>
+	    <h3>Get sttarted right now with your team!</h3>
+	  </div>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

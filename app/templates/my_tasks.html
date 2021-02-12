@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container mt-2">
+  <h1>My Tasks</h1>
+  <div class="container">
+    <div class="row">
+      {% for tasks in tasks_pending %}
+      <div class="col-6">
+	<div class="card mb-5 table-hover">
+	  <h3 class="card-header table-primary text-white">{{ tasks.subject }}</h3>
+	  <div class="card-body">
+	    <h5 class="card-title text-white">{{ tasks.sender.first_name }} {{ tasks.sender.last_name }}</h5>
+	    <strong class="card-subtitle">{{ tasks.sender.programming_area }}</strong>
+	  </div>
+	  <ul class="list-group list-group-flush">
+	    <li class="list-group-item"><strong>Send To: </strong><p class="ml-5">{{ tasks.send_date }}</p></li>
+	    <li class="list-group-item"><strong>Message: </strong><p class="ml-5">{{ tasks.message }}</p></li>
+	    <li class="list-group-item"><strong>Limit Date: </strong><p class="ml-5">{{ tasks.limit_date }}</p></li>
+	  </ul>
+	</div>
+      </div>
+      {% endfor %}   
+    </div>
+  </div>
+</div>
+{% endblock %}
