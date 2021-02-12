@@ -1,6 +1,7 @@
 # Where Is My Task?
 
-*CRUD de tareas con Django y sqlite.*
+*CRUD de tareas con Python 3.7, Django 3 y sqlite.*
+
 Administre como lider de un equipo de desarrollo las tareas de sus compañeros
 otorgandole 1 punto por cada tarea completada.
 
@@ -25,7 +26,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-## Contributing
+## Contribuye
 Agradesco cualquier tipo de recomendación, mejoras y comentarios.
 
 ## License
