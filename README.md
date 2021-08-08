@@ -11,11 +11,11 @@ otorgandole 1 punto por cada tarea completada.
 Utilice [pip](https://pip.pypa.io/en/stable/) para instalar los modulos en el fichero requeriment.txt
 
 ```bash
-pip install -r requeriment.txt
+pip install -r requirements.txt
 ```
 O en su defecto
 ```bash
-pip3 install -r requeriment.txt
+pip3 install -r requirements.txt
 ```
 Si tambien cuenta con la versión 2 de Python
 
