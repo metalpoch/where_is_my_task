@@ -26,8 +26,5 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-## Contribuye
-Agradesco cualquier tipo de recomendación, mejoras y comentarios.
-
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
